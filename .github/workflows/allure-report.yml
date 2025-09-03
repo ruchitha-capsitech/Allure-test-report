@@ -8,6 +8,8 @@ on:
 
 permissions:
   contents: write   # ✅ allow bot to push to gh-pages
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -23,7 +25,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Maven (skip tests in CI)
+      # ✅ Build without running tests (so Selenium won’t fail in CI)
+      - name: Build with Maven (skip tests)
         run: mvn clean install -DskipTests
 
       - name: Install Allure
@@ -36,7 +39,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           allure generate allure-results --clean -o allure-report
-          touch allure-report/.nojekyll   # ✅ disables Jekyll
+          touch allure-report/.nojekyll   # ✅ prevents Jekyll build errors
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
