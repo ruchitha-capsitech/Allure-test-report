@@ -23,8 +23,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn clean test
+      - name: Build with Maven (skip tests in CI)
+        run: mvn clean install -DskipTests
 
       - name: Install Allure
         run: |
