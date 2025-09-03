@@ -2,9 +2,12 @@ name: Allure Report CI
 
 on:
   push:
-    branches: [ main ]   # Run only on main branch
+    branches: [ main ]
   pull_request:
     branches: [ main ]
+
+permissions:
+  contents: write   # ✅ allow pushing to gh-pages
 
 jobs:
   build:
